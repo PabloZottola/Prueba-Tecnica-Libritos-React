@@ -1,15 +1,9 @@
-import { useState } from "react";
-import book from "../api/book.json";
+import { useEffect, useState } from "react";
 
 function useBook() {
-  if (!localStorage.getItem("BookList")) {
-    localStorage.setItem("BookList", JSON.stringify(book.library));
-  }
-
   const bookList = JSON.parse(localStorage.getItem("BookList"));
-
   const [isBook, setIsBook] = useState(bookList);
-
+  useEffect(() => {}, [isBook]);
   const handleRear = (e) => {
     const id = e.target.value;
     const readBook = bookList.filter((book) => book.book.ISBN === id);
@@ -20,7 +14,7 @@ function useBook() {
       );
       localStorage.setItem("ReadList", JSON.stringify(readBook));
       localStorage.setItem("BookList", JSON.stringify(bookRemove));
-      setIsBook(bookRemove);
+      setIsBook(readBook);
     } else {
       const readList = JSON.parse(localStorage.getItem("ReadList"));
       const readFind = readList.find(
@@ -33,12 +27,12 @@ function useBook() {
         readList.push(readBook[0]);
         localStorage.setItem("ReadList", JSON.stringify(readList));
         localStorage.setItem("BookList", JSON.stringify(bookRemove));
-        setIsBook(bookRemove);
+        setIsBook(readBook);
       }
     }
   };
 
-  return { handleRear, isBook };
+  return { handleRear };
 }
 
 export default useBook;

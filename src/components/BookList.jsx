@@ -1,14 +1,13 @@
-import React, { useEffect } from "react";
-import useBook from "../hook/useBook";
-
-function BookList() {
-  const { handleRear, isBook } = useBook();
-  useEffect(() => {}, [isBook]);
+function BookList({ handleRear }) {
+  const bookList = JSON.parse(localStorage.getItem("BookList"));
 
   return (
     <>
-      {isBook.map((book) => (
-        <li key={book.book.ISBN} className="relative">
+      {bookList?.map((book) => (
+        <li
+          key={book.book.ISBN}
+          className="flex flex-col gap-1 relative w-44 h-auto"
+        >
           <button
             className="absolute right-0 m-2 text-xl"
             value={book.book.ISBN}
@@ -16,11 +15,14 @@ function BookList() {
           >
             📖
           </button>
-          <img src={book.book.cover} alt={book.book.tittle} />
+          <img
+            className="w-auto h-72"
+            src={book.book.cover}
+            alt={book.book.tittle}
+          />
           <p>{book.book.title}</p>
           <p>{book.book.genre}</p>
           <p>{book.book.year}</p>
-          <p>{book.book.synopsis}</p>
         </li>
       ))}
     </>
