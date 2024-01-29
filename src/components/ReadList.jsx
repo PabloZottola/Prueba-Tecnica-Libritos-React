@@ -1,4 +1,4 @@
-function ReadList() {
+function ReadList({ handleBook }) {
   const readBookList = JSON.parse(localStorage.getItem("ReadList"));
   return (
     <>
@@ -7,6 +7,11 @@ function ReadList() {
           key={book.book.ISBN}
           className="flex flex-col gap-1 relative w-44 h-auto"
         >
+          <button
+            className="absolute right-0 m-2 text-xl"
+            value={book.book.ISBN}
+            onClick={handleBook}
+          >❌</button>
           <img
             className="w-auto h-72"
             src={book.book.cover}

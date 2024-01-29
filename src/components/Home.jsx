@@ -1,15 +1,9 @@
 import BookList from "./BookList";
 import ReadList from "./ReadList";
-import book from "../api/book.json";
 import useBook from "../hook/useBook";
 
 function Home() {
-  const { handleRear } = useBook();
-  const localBook = localStorage.getItem("BookList");
-
-  if (!localBook) {
-    localStorage.setItem("BookList", JSON.stringify(book.library));
-  }
+  const { handleRead, handleBook } = useBook();
 
   return (
     <main className="grid tablet:grid-cols-6 tablet:divide-x tablet:divide-y-0 divide-y desktop:w-10/12 laptop:w-3/4 m-auto tablet:pt-1">
@@ -18,7 +12,7 @@ function Home() {
           Lista de Libros
         </h2>
         <ul className="grid grid-cols-[repeat(auto-fill,_minmax(180px,_1fr))] justify-items-center gap-2 mx-auto text-white">
-          <BookList handleRear={handleRear} />
+          <BookList handleRead={handleRead} />
         </ul>
       </section>
       <aside className="tablet:col-span-2 py-5 pl-2">
@@ -26,7 +20,7 @@ function Home() {
           Lista de Lectura
         </h2>
         <ul className="grid grid-cols-[repeat(auto-fill,_minmax(180px,_1fr))] justify-items-center gap-2 mx-auto text-white">
-          <ReadList />
+          <ReadList handleBook={handleBook} />
         </ul>
       </aside>
     </main>

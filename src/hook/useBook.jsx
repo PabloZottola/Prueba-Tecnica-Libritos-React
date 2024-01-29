@@ -1,38 +1,44 @@
 import { useEffect, useState } from "react";
+import book from "../api/book.json";
 
 function useBook() {
+  const localBook = localStorage.getItem("BookList");
   const bookList = JSON.parse(localStorage.getItem("BookList"));
+  const readList = JSON.parse(localStorage.getItem("ReadList"));
   const [isBook, setIsBook] = useState(bookList);
-  useEffect(() => {}, [isBook]);
-  const handleRear = (e) => {
-    const id = e.target.value;
-    const readBook = bookList.filter((book) => book.book.ISBN === id);
 
-    if (!localStorage.getItem("ReadList")) {
-      const bookRemove = bookList.filter(
-        (book) => book.book.ISBN !== readBook[0].book.ISBN
-      );
-      localStorage.setItem("ReadList", JSON.stringify(readBook));
-      localStorage.setItem("BookList", JSON.stringify(bookRemove));
-      setIsBook(readBook);
-    } else {
-      const readList = JSON.parse(localStorage.getItem("ReadList"));
-      const readFind = readList.find(
-        (book) => book.book.ISBN === readBook[0].book.ISBN
-      );
-      if (!readFind) {
-        const bookRemove = bookList.filter(
-          (book) => book.book.ISBN !== readBook[0].book.ISBN
-        );
-        readList.push(readBook[0]);
-        localStorage.setItem("ReadList", JSON.stringify(readList));
-        localStorage.setItem("BookList", JSON.stringify(bookRemove));
-        setIsBook(readBook);
-      }
-    }
+  useEffect(() => {}, [isBook]);
+
+  if (!localBook) {
+    localStorage.setItem("BookList", JSON.stringify(book.library));
+    localStorage.setItem("ReadList", JSON.stringify([]));
+  }
+
+  const handleBook = (e) => {
+    const id = e.target.value;
+    const bookListFilter = readList.filter((book) => book.book.ISBN === id);
+    const readBookRemove = readList.filter(
+      (book) => book.book.ISBN !== bookListFilter[0].book.ISBN
+    );
+
+    bookList.push(bookListFilter[0]);
+    localStorage.setItem("ReadList", JSON.stringify(readBookRemove));
+    localStorage.setItem("BookList", JSON.stringify(bookList));
+    setIsBook(readList);
   };
 
-  return { handleRear };
+  const handleRead = (e) => {
+    const id = e.target.value;
+    const readBook = bookList.filter((book) => book.book.ISBN === id);
+    const bookRemove = bookList.filter(
+      (book) => book.book.ISBN !== readBook[0].book.ISBN
+    );
+    readList.push(readBook[0]);
+    localStorage.setItem("ReadList", JSON.stringify(readList));
+    localStorage.setItem("BookList", JSON.stringify(bookRemove));
+    setIsBook(readBook);
+  };
+  return { handleRead, handleBook };
 }
 
 export default useBook;

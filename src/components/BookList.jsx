@@ -1,4 +1,4 @@
-function BookList({ handleRear }) {
+function BookList({ handleRead }) {
   const bookList = JSON.parse(localStorage.getItem("BookList"));
 
   return (
@@ -11,7 +11,7 @@ function BookList({ handleRear }) {
           <button
             className="absolute right-0 m-2 text-xl"
             value={book.book.ISBN}
-            onClick={handleRear}
+            onClick={handleRead}
           >
             📖
           </button>
