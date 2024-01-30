@@ -8,6 +8,7 @@ function BookProvider({ children }) {
   const readList = JSON.parse(localStorage.getItem("ReadList"));
   const [isBook, setIsBook] = useState(localBook);
 
+  // REDERIZADO POR PESTAÑAS
   useEffect(() => {
     const handleStorageChange = () => {
       location.reload();
@@ -20,6 +21,7 @@ function BookProvider({ children }) {
     };
   }, [isBook]);
 
+  // SUBIR EL JSON AL STORAGE SI NO LO TIENE
   if (!localBook) {
     localStorage.setItem("BookList", JSON.stringify(book.library));
     localStorage.setItem("ReadList", JSON.stringify([]));
@@ -49,6 +51,7 @@ function BookProvider({ children }) {
     localStorage.setItem("BookList", JSON.stringify(bookRemove));
     setIsBook(bookList);
   };
+
   return (
     <BookContext.Provider
       value={{
