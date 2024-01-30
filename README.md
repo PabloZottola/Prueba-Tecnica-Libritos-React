@@ -14,8 +14,10 @@ La aplicación debe ser fácil de usar y agradable a la vista.
 Tenemos un 80% de usuarios que vienen de navegadores de escritorio.
 Usa el archivo books.json para obtener los datos de los libros. Puedes añadir más libros si lo deseas, siempre y cuando siga la misma estructura.
 
-Requisitos
+Requisitos:
+
 Funcionalidad
+
 ✔ Visualización de Libros Disponibles: La aplicación debe mostrar una lista de libros disponibles que el usuario pueda revisar.
 
 ✔ Creación de Lista de Lectura: El usuario debe ser capaz de crear una lista de lectura a partir de los libros disponibles. En la UI debe quedar claro qué libros están en la lista de lectura y cuáles no. También debe ser posible mover un libro de la lista de lectura a la lista de disponibles.
@@ -26,9 +28,7 @@ Filtrado de Libros por Género: Los usuarios deben poder filtrar la lista de lib
 
 ✔ Persistencia de Datos: La aplicación debe persistir los datos de la lista de lectura en el almacenamiento local del navegador. Al recargar la página, la lista de lectura debe mantenerse.
 
-Sincronización entre pestañas: Si el usuario abre la aplicación en dos pestañas diferentes, los cambios realizados en una pestaña deben reflejarse en la otra. Sin necesidad de usar Backend.
-
-Test: La aplicación debe tener AL MENOS un test. Haz el test que consideres más importante para tu aplicación.
+✔ Sincronización entre pestañas: Si el usuario abre la aplicación en dos pestañas diferentes, los cambios realizados en una pestaña deben reflejarse en la otra. Sin necesidad de usar Backend.
 
 Desafíos adicionales
 ¿Quieres ir más allá? Estos son algunos desafíos adicionales que puedes intentar:

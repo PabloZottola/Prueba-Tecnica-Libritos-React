@@ -1,8 +1,12 @@
-function ReadList({ handleBook }) {
-  const readBookList = JSON.parse(localStorage.getItem("ReadList"));
+import { useContext } from "react";
+import { BookContext } from "../contexts/BookContext";
+
+function ReadList() {
+  const { handleBook, readList } = useContext(BookContext);
+
   return (
     <>
-      {readBookList?.map((book) => (
+      {readList?.map((book) => (
         <li
           key={book.book.ISBN}
           className="flex flex-col gap-1 relative w-44 h-auto"
@@ -11,7 +15,9 @@ function ReadList({ handleBook }) {
             className="absolute right-0 m-2 text-xl"
             value={book.book.ISBN}
             onClick={handleBook}
-          >❌</button>
+          >
+            ❌
+          </button>
           <img
             className="w-auto h-72"
             src={book.book.cover}

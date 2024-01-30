@@ -1,5 +1,8 @@
-function BookList({ handleRead }) {
-  const bookList = JSON.parse(localStorage.getItem("BookList"));
+import { useContext } from "react";
+import { BookContext } from "../contexts/BookContext";
+
+function BookList() {
+  const { handleRead, bookList } = useContext(BookContext);
 
   return (
     <>

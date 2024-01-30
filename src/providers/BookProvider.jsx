@@ -1,13 +1,24 @@
 import { useEffect, useState } from "react";
+import { BookContext } from "../contexts/BookContext";
 import book from "../api/book.json";
 
-function useBook() {
+function BookProvider({ children }) {
   const localBook = localStorage.getItem("BookList");
   const bookList = JSON.parse(localStorage.getItem("BookList"));
   const readList = JSON.parse(localStorage.getItem("ReadList"));
-  const [isBook, setIsBook] = useState(bookList);
+  const [isBook, setIsBook] = useState(localBook);
 
-  useEffect(() => {}, [isBook]);
+  useEffect(() => {
+    const handleStorageChange = () => {
+      location.reload();
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [isBook]);
 
   if (!localBook) {
     localStorage.setItem("BookList", JSON.stringify(book.library));
@@ -24,7 +35,7 @@ function useBook() {
     bookList.push(bookListFilter[0]);
     localStorage.setItem("ReadList", JSON.stringify(readBookRemove));
     localStorage.setItem("BookList", JSON.stringify(bookList));
-    setIsBook(readList);
+    setIsBook(bookList);
   };
 
   const handleRead = (e) => {
@@ -36,9 +47,20 @@ function useBook() {
     readList.push(readBook[0]);
     localStorage.setItem("ReadList", JSON.stringify(readList));
     localStorage.setItem("BookList", JSON.stringify(bookRemove));
-    setIsBook(readBook);
+    setIsBook(bookList);
   };
-  return { handleRead, handleBook };
+  return (
+    <BookContext.Provider
+      value={{
+        handleRead,
+        readList,
+        handleBook,
+        bookList,
+      }}
+    >
+      {children}
+    </BookContext.Provider>
+  );
 }
 
-export default useBook;
+export default BookProvider;
