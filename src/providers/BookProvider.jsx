@@ -1,55 +1,45 @@
-import { useEffect, useState } from "react";
+import { useReducer, useState } from "react";
 import { BookContext } from "../contexts/BookContext";
-import book from "../api/book.json";
+import { types } from "../types/types";
+import { UseStorage } from "../hook/UseStorage";
+import { BookReducer } from "../reducer/BookReducer";
+
+const initialValues = {
+  bookRemove: [],
+  updatedBooks: [],
+};
 
 function BookProvider({ children }) {
   const localBook = localStorage.getItem("BookList");
-  const bookList = JSON.parse(localStorage.getItem("BookList"));
-  const readList = JSON.parse(localStorage.getItem("ReadList"));
+  const bookList = JSON.parse(localBook) || [];
+  const readList = JSON.parse(localStorage.getItem("ReadList")) || [];
   const [isBook, setIsBook] = useState(localBook);
+  const [state, dispatch] = useReducer(BookReducer, initialValues);
+  UseStorage({ isBook });
 
-  // REDERIZADO POR PESTAÑAS
-  useEffect(() => {
-    const handleStorageChange = () => {
-      location.reload();
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, [isBook]);
-
-  // SUBIR EL JSON AL STORAGE SI NO LO TIENE
-  if (!localBook) {
-    localStorage.setItem("BookList", JSON.stringify(book.library));
-    localStorage.setItem("ReadList", JSON.stringify([]));
-  }
+  const updateBooks = (type, id, sourceList, destinationList) => {
+    const bookFilter = sourceList.filter((book) => book.book.ISBN === id);
+    dispatch({
+      type,
+      payload: {
+        bookRemove: sourceList.filter(
+          (book) => book.book.ISBN !== bookFilter[0].book.ISBN
+        ),
+        updatedBooks: [...destinationList, bookFilter[0]],
+      },
+    });
+  };
 
   const handleBook = (e) => {
     const id = e.target.value;
-    const bookListFilter = readList.filter((book) => book.book.ISBN === id);
-    const readBookRemove = readList.filter(
-      (book) => book.book.ISBN !== bookListFilter[0].book.ISBN
-    );
-
-    bookList.push(bookListFilter[0]);
-    localStorage.setItem("ReadList", JSON.stringify(readBookRemove));
-    localStorage.setItem("BookList", JSON.stringify(bookList));
-    setIsBook(bookList);
+    updateBooks(types.book.bookList, id, readList, bookList);
+    setIsBook(localBook);
   };
 
   const handleRead = (e) => {
     const id = e.target.value;
-    const readBook = bookList.filter((book) => book.book.ISBN === id);
-    const bookRemove = bookList.filter(
-      (book) => book.book.ISBN !== readBook[0].book.ISBN
-    );
-    readList.push(readBook[0]);
-    localStorage.setItem("ReadList", JSON.stringify(readList));
-    localStorage.setItem("BookList", JSON.stringify(bookRemove));
-    setIsBook(bookList);
+    updateBooks(types.book.readList, id, bookList, readList);
+    setIsBook(localBook);
   };
 
   return (
