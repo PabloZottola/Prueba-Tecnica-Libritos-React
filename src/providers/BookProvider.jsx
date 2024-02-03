@@ -28,18 +28,17 @@ function BookProvider({ children }) {
         updatedBooks: [...destinationList, bookFilter[0]],
       },
     });
+    setIsBook([...destinationList, bookFilter[0]]);
   };
 
   const handleBook = (e) => {
     const id = e.target.value;
     updateBooks(types.book.bookList, id, readList, bookList);
-    setIsBook(localBook);
   };
 
   const handleRead = (e) => {
     const id = e.target.value;
     updateBooks(types.book.readList, id, bookList, readList);
-    setIsBook(localBook);
   };
 
   return (
