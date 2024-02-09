@@ -1,6 +1,3 @@
-Midulibritos
-Hola Midugente, hice este challenge a modo de práctica y me encontré con un montón de desafíos divertidos y cosas nuevas que aprendí (como el evento de storage), no tuve suficiente tiempo como para darle el amor que se merece así que el resultado es muy limitado.
-
 01 - Desarrollo de una Aplicación de Lista de Libros
 El objetivo de esta prueba es diseñar e implementar una pequeña aplicación web de lista de libros utilizando las herramientas de tu elección.
 
@@ -9,9 +6,10 @@ Somos un sello editorial de libros multinacional. Queremos ofrecer a nuestro pú
 
 Para ello, queremos desarrollar una aplicación web que permita a los usuarios ver los libros disponibles y crear una lista de lectura. Ten en cuenta que:
 
-No sabemos si el framework que utilicemos ahora será el definitivo, pero querremos reutilizar el máximo de código posible.
 La aplicación debe ser fácil de usar y agradable a la vista.
+
 Tenemos un 80% de usuarios que vienen de navegadores de escritorio.
+
 Usa el archivo books.json para obtener los datos de los libros. Puedes añadir más libros si lo deseas, siempre y cuando siga la misma estructura.
 
 Requisitos:
